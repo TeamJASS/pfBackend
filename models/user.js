@@ -1,3 +1,4 @@
+
 import { model, Schema } from "mongoose";
 import { toJSON } from "@reis/mongoose-to-json";
 
@@ -108,3 +109,5 @@ const userSchema = new Schema(
   });
 
 export const User = model("User", userSchema);
+ 
+
