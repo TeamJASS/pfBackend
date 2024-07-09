@@ -105,8 +105,6 @@ const userSchema = new Schema(
         projectName: { type: String },
       },
     ],
-  },
-  { timestamps: true }
-);
+  });
 
 export const User = model("User", userSchema);
