@@ -2,7 +2,7 @@ import { model, Schema, Types } from "mongoose";
 import { toJSON } from "@reis/mongoose-to-json";
 
 
-const volunteringSchema = new Schema(
+const volunteeringSchema = new Schema(
         {
           organization: { type: String },
           description: { type: String },
@@ -18,4 +18,4 @@ const volunteringSchema = new Schema(
     );
 
     
-export const Voluntering = model("Voluntering", volunteringSchema); 
+export const Volunteering = model("Volunteering", volunteeringSchema); 
