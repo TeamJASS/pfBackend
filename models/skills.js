@@ -10,4 +10,6 @@ const skillsSchema = new Schema({
   },
 });
 
+skillsSchema.plugin(toJSON);
+
 export const Skills = model("Skills", skillsSchema);

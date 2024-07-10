@@ -11,4 +11,6 @@ const userSchema = new Schema({
   termsAndConditions: { type: Boolean },
 });
 
+userSchema.plugin(toJSON);
+
 export const User = model("User", userSchema);

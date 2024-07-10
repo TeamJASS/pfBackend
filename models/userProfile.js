@@ -17,4 +17,7 @@ const userProfileSchema =newSchema({
     twitterLink: { type: String },
     user:{type:Types.ObjectId, ref:"User"},
 }) 
+
+userProfileSchema.plugin(toJSON);
+
 export const UserProfile = model("UserProfile",userProfileSchema);
