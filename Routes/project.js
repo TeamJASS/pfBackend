@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {  getProject, patchProject, postproject, getProjects, deletedProject } from "../controllers/project.js";
+import {  getProject, postproject, patchProject, getProjects, deletedProject } from "../controllers/project.js";
 
 
 // Create a Router
@@ -9,7 +9,8 @@ const projectRouter = Router();
 projectRouter.get('/project', getProject);
 
 // Add Project
-projectRouter.post('/project', localUpload.single('image'), postproject);
+projectRouter.post('/project', postproject);
+// ', localUpload.single('image')
 
 //update patch 
 projectRouter.patch('/project/:id', patchProject);

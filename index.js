@@ -1,5 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
+import educationRouter from "./Routes/education.js";
+import projectRouter from "./Routes/project.js";
 import userRouter from "./Routes/user_routes.js";
 
 //DB Connection String
@@ -14,12 +16,13 @@ app.use(express.json());
 
 app.use("/api/v1",userRouter)
 
+// Apply middleware
+ app.use (express.json());
 
 
-
-
-
-
+// use Middleware
+app.use(educationRouter);
+app.use(projectRouter);
 
 
 // server set up
