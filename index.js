@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
-
+import educationRouter from "./Routes/education.js";
+import projectRouter from "./Routes/project.js";
 
 //DB Connection String
 await mongoose.connect(process.env.MONGO_URI)
@@ -9,12 +10,13 @@ await mongoose.connect(process.env.MONGO_URI)
 const app = express();
 
 
+// Apply middleware
+ app.use (express.json());
 
 
-
-
-
-
+// use Middleware
+app.use(educationRouter);
+app.use(projectRouter);
 
 
 // server set up

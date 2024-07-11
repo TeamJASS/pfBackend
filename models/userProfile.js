@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
 
 
-const userProfileSchema =newSchema({
+const userProfileSchema = new Schema({
     profilePicture: { type: String },
     location: { type: String },
     maritalStatus: { type: String, enum: ["single", "married", "perfer-not-to-say"] },
