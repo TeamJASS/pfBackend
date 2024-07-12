@@ -32,24 +32,6 @@ export const getProject = async (req, res, next) => {
 };
 
 // Post project
-// export const postproject = async (req, res, next) => {
-//   const { error, value } = projectSchema.validate(req.body);
-//   if (error) {
-//     return res.status(400).send(error.details[0], message);
-//   }
-//   try {
-//     // Add Project to database
-//     const addproject = await Project.create({
-//       ...req.body,
-//       image: req.file.filename,
-//     });
-//     // return response
-//     res.status(201).json(addproject);
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
 
 export const postproject = async (req, res, next) => {
   const { error, value } = projectSchema.validate(req.body);

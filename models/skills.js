@@ -1,7 +1,7 @@
 import { model, Schema, Types } from "mongoose";
 import { toJSON } from "@reis/mongoose-to-json";
 
-const skillsSchema = new Schema({
+const skillSchema = new Schema({
   name: { type: String },
   levelOfProficency: {
     type: String,
@@ -10,6 +10,6 @@ const skillsSchema = new Schema({
   },
 });
 
-skillsSchema.plugin(toJSON);
+skillSchema.plugin(toJSON);
 
-export const Skills = model("Skills", skillsSchema);
+export const Skill = model("Skill", skillSchema);

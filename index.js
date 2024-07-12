@@ -5,6 +5,7 @@ import projectRouter from "./Routes/project.js";
 import userRouter from "./Routes/user_routes.js";
 import achievementsRouter from "./Routes/achievements.js";
 import experienceRouter from "./Routes/experience.js";
+import skillsRouter from "./Routes/skills.js";
 
 //DB Connection String
 await mongoose.connect(process.env.MONGO_URI)
@@ -28,6 +29,7 @@ app.use(educationRouter);
 app.use(projectRouter);
 app.use(achievementsRouter);
 app.use(experienceRouter);
+app.use(skillsRouter);
 
 
 // server set up
