@@ -32,23 +32,43 @@ export const getProject = async (req, res, next) => {
 };
 
 // Post project
+// export const postproject = async (req, res, next) => {
+//   const { error, value } = projectSchema.validate(req.body);
+//   if (error) {
+//     return res.status(400).send(error.details[0], message);
+//   }
+//   try {
+//     // Add Project to database
+//     const addproject = await Project.create({
+//       ...req.body,
+//       image: req.file.filename,
+//     });
+//     // return response
+//     res.status(201).json(addproject);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+
 export const postproject = async (req, res, next) => {
   const { error, value } = projectSchema.validate(req.body);
   if (error) {
-    return res.status(400).send(error.details[0], message);
+      return res.status(400).send(error.details[0].message);
   }
   try {
-    // Add Project to database
-    const addproject = await Project.create({
-      ...req.body,
-      image: req.file.filename,
-    });
-    // return response
-    res.json(addproject);
+      // Add Project to database
+      const addproject = await Project.create({
+          ...req.body,
+          image: req.file ? req.file.filename : undefined, // Handle the case when req.file is not present
+      });
+      // return response
+      res.status(201).json(addproject);
   } catch (error) {
-    next(error);
+      next(error);
   }
 };
+
 
 
 // Patch Project
@@ -57,7 +77,7 @@ export const patchProject = (req, res) => {
   if (error) {
     return res.status(400).send(error.details[0], message);
   }
-  res.json(`Project updated with ${req.params.id} updated`);
+  res.json(`Project updated with ID ${req.params.id} updated`);
 };
 
 try {
@@ -69,7 +89,7 @@ try {
   // return response
   res.json(addproject);
 } catch (error) {
-  next(error);
+//  next(error);
 };
 
 

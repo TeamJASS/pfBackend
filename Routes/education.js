@@ -10,7 +10,8 @@ educationRouter.get('/education/:id', allEducation);
 
 
 // Add  all Education record
-educationRouter.post('/education', localUpload.single('image'), addEducation);
+educationRouter.post('/education', addEducation);
+// localUpload.single('image'),
 
 //update/ patch 
 educationRouter.patch('/education/:id', patchEducation);

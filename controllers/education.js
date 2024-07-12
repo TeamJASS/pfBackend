@@ -1,15 +1,5 @@
 import { Education } from "../models/education.js"
-import { educationSchema } from "../schema/education_schema.js"
-
-// export const education = async ( req, res ) => {
-
-//   const {error, value} = educationSchema.validate(req.body)
-//   if (error) {
-//     return res.status(400).send(error.details[0],message)
-//   }
-
-
-// }
+import { educationSchema } from "../schema/user_schema.js"
 
 
 // export const education = async ( req, res ) => {
@@ -33,7 +23,7 @@ import { educationSchema } from "../schema/education_schema.js"
  // Get all Education
   export const allEducation = async (req, res, next) => {
     try {
-        const alEducation = await Education.find();
+        const alEducation = await Education.find(req.params);
         res.json(alEducation);
     } catch (error) {
         next(error);

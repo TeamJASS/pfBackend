@@ -14,7 +14,8 @@ const app = express();
 // use middleware
 app.use(express.json());
 
-app.use("/api/v1",userRouter)
+app.use("/api/v1",userRouter);
+
 
 // Apply middleware
  app.use (express.json());
@@ -28,4 +29,4 @@ app.use(projectRouter);
 // server set up
 app.listen (1020,() => {
     console.log ("Live on 1020")
-})
+});
