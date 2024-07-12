@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import educationRouter from "./Routes/education.js";
 import projectRouter from "./Routes/project.js";
 import userRouter from "./Routes/user_routes.js";
+import achievementsRouter from "./Routes/achievements.js";
+import experienceRouter from "./Routes/experience.js";
 
 //DB Connection String
 await mongoose.connect(process.env.MONGO_URI)
@@ -24,6 +26,8 @@ app.use("/api/v1",userRouter);
 // use Middleware
 app.use(educationRouter);
 app.use(projectRouter);
+app.use(achievementsRouter);
+app.use(experienceRouter);
 
 
 // server set up
