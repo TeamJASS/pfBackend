@@ -1,12 +1,12 @@
-import { Achievements } from "../models/achievements.js"
-import { achievementsSchema } from "../schema/user_schema.js"
+import { Achievement } from "../models/achievements.js"
+import { achievementSchema } from "../schema/user_schema.js"
 
 
 
  // Get all Achievements
   export const allAchievements = async (req, res, next) => {
     try {
-        const alAchievements = await Achievements.find(req.params);
+        const alAchievements = await Achievement.find(req.params);
         res.json(alAchievements);
     } catch (error) {
         next(error);
@@ -21,7 +21,7 @@ export const getAchievements = async (req, res, next) => {
       // Get query Params
       const { limit, skip, filter } = req.query;
       // Get all Achievements from database
-      const allAchievements = await  Achievements
+      const allAchievements = await  Achievement
       .find({ name: filter })
       .limit(limit)
       .skip(skip);
@@ -37,13 +37,13 @@ export const getAchievements = async (req, res, next) => {
 
   export const addAchievements = async ( req, res ) => {
     try {
-      const {error, value} = achievementsSchema.validate(req.body)
+      const {error, value} = achievementSchema.validate(req.body)
     if (error) {
       return res.status(400).send(error.details[0].message)
     } 
     console.log('value', value) 
     
-    const achievements = await Achievements.create(value)
+    const achievements = await Achievement.create(value)
     res.status(201).json({achievements:achievements})
     
     } catch (error) {
@@ -60,13 +60,13 @@ export const getAchievements = async (req, res, next) => {
 export const patchAchievements = async (req, res, next) => {
   try {
       // Validate request body
-      const { error, value } = achievementsSchema.validate(req.body);
+      const { error, value } = achievementSchema.validate(req.body);
       if (error) {
           return res.status(400).send(error.details[0].message);
       }
 
       // Find and update the achievements record
-      const updateAchievements = await Achievements.findByIdAndUpdate(
+      const updateAchievements = await Achievement.findByIdAndUpdate(
           req.params.id,
           value,
           { new: true, runValidators: true }

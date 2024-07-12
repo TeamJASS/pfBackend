@@ -59,7 +59,7 @@ export const userProfileSchema=joi.object({
         endDate: joi.string(),
       });
       
-      export const achievementsSchema = joi.object({
+      export const achievementSchema = joi.object({
         awards: joi.string(),
         program: joi.string(),
         qualification: joi.string(),
