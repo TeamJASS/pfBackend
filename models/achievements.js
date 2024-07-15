@@ -2,7 +2,7 @@ import { model, Schema, Types } from "mongoose";
 import { toJSON } from "@reis/mongoose-to-json";
 
 const achievementSchema = new Schema({
-  awards: { type: String },
+  award: { type: String },
   program: { type: String },
   qualification: { type: String },
   grade: { type: String },

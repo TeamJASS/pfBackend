@@ -37,8 +37,7 @@ export const userProfileSchema = joi.object({
 export const skillSchema = joi.object({
     name: joi.string().required(),
     levelOfProficency: joi.string().valid("Beginner", "Intermediate", "Advance", "Expert").optional(),
-    user: joi.string().required()
-
+    user: joi.string()
 });
 
 export const experienceSchema = joi.object({
@@ -49,7 +48,7 @@ export const experienceSchema = joi.object({
     location: joi.string().optional(),
     startDate: joi.string(),
     endDate: joi.string(),
-    user: joi.string().required()
+    user: joi.string()
 
 });
 
@@ -62,17 +61,17 @@ export const educationSchema = joi.object({
     grade: joi.string().optional(),
     startDate: joi.string(),
     endDate: joi.string(),
-    user: joi.string().required()
+    user: joi.string()
 
 });
 
 export const achievementSchema = joi.object({
-    awards: joi.string(),
+    award: joi.string(),
     description: joi.string(),
     image: joi.string(),
     date: joi.string(),
     nameOfInstitution: joi.string(),
-    user: joi.string().required()
+    user: joi.string()
 
 });
 
@@ -85,21 +84,21 @@ export const projectSchema = joi.object({
     nameOfInstitution: joi.string(),
     startDate: joi.string(),
     endDate: joi.string(),
-    user: joi.string().required()
+    user: joi.string()
 
 });
 
 export const volunteeringSchema = joi.object({
-    organization: joi.string(),
-    description: joi.string(),
-    skills: joi.string(),
-    link: joi.string().uri().optional(),
-    nameOfInstitution: joi.string(),
-    roles: joi.string(),
-    responsbility: joi.string(),
-    location: joi.string(),
-    projectName: joi.string().optional(),
-    user: joi.string().required()
+  organisation: joi.string().required(),
+  description: joi.string().required(),
+  skills: joi.string(),
+  startDate: joi.string().required(),
+  endDate: joi.string(),
+  role: joi.string().required(),
+  responsibility: joi.string().required(),
+  location: joi.string(),
+  projectName: joi.string(),
+  user: joi.string()
 
 });
 

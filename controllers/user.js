@@ -42,7 +42,7 @@ export const login = async (req, res, next) => {
         //validate request
         const { value, error } = loginSchema.validate(req.body);
         if (error) {
-            return res.status(422).json(error);
+            return res.status(400).send(error.details[0].message);
         }
         //find a user with their unique identifier
 
@@ -80,33 +80,33 @@ export const getUser = async (req, res, next) => {
         const options = { sort: { startDate: -1 } }
         const userDetails = await UserModel.findOne({ username })
         .populate("userProfile")
-            // .populate({
-            //     path: "education",
-            //     options,
-            // })
+            .populate({
+                path: "education",
+                options,
+            })
             
-            // .populate("skills")
+            .populate("skills")
 
-            // .populate({
-            //     path: "achievements",
-            //     options: { sort: { date: -1 } },
-            // })
-            // .populate({
-            //     path: "experiences",
-            //     options,
-            // })
-            // .populate({
-            //     path: "volunteering",
-            //     options,
-            // })
-            // .populate({
-            //     path: 'projects',
-            //     options
-            // });
+            .populate({
+                path: "achievements",
+                options: { sort: { date: -1 } },
+            })
+            .populate({
+                path: "experiences",
+                options,
+            })
+            .populate({
+                path: "volunteering",
+                options,
+            })
+            .populate({
+                path: 'projects',
+                options
+            });
 
         return res.status(200).json({ username: userDetails });
     } catch (error) {
-        console.log(error)
+        next(error)
     }
 };
 
