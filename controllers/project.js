@@ -1,6 +1,6 @@
 import { Project } from "../models/project.js";
-import { projectSchema } from "../schema/user_schema.js";
-import { User } from "../models/user.js";
+import { UserModel } from "../models/user.js";
+import { projectSchema } from "../schemas/schema.js";
 
 
 // Get all Projects
@@ -50,7 +50,7 @@ export const postproject = async (req, res, next) => {
 
     const userSessionId = req.session.user.id;
    
-    const user = await User.findById(userSessionId);
+    const user = await UserModel.findById(userSessionId);
     if (!user) {
       return res.status(404).send("User not found");
     }
@@ -77,7 +77,7 @@ try {
   }
 
   const userSessionId = req.session.user.id; 
-  const user = await User.findById(userSessionId);
+  const user = await UserModel.findById(userSessionId);
   if (!user) {
     return res.status(404).send("User not found");
   }
@@ -100,7 +100,7 @@ try {
 export const deletedProject = async (req, res, next) => {
   try {
     const userSessionId = req.session.user.id; 
-    const user = await User.findById(userSessionId);
+    const user = await UserModel.findById(userSessionId);
     if (!user) {
       return res.status(404).send("User not found");
     }

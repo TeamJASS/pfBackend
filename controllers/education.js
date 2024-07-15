@@ -1,6 +1,6 @@
 import { Education } from "../models/education.js"
-import { educationSchema } from "../schema/user_schema.js"
-import { User } from "../models/user.js"
+import { UserModel } from "../models/user.js"
+import { educationSchema } from "../schemas/schema.js";
 
 
 
@@ -17,7 +17,7 @@ import { User } from "../models/user.js"
     //then, find the user with the id that user passed when adding the education
     console.log('userId',req.session.user.id)
     const userSessionId = req.session.user.id
-    const user = await User.findById(userSessionId);
+    const user = await UserModel.findById(userSessionId);
     if (!user) {
       return res.status(404).send("User not found");
     }
@@ -88,7 +88,7 @@ export const patchEducation = async (req, res, next) => {
     }
 
     const userSessionId = req.session.user.id; 
-    const user = await User.findById(userSessionId);
+    const user = await UserModel.findById(userSessionId);
     if (!user) {
       return res.status(404).send("User not found");
     }
@@ -113,7 +113,7 @@ export const patchEducation = async (req, res, next) => {
   try {
      
     const userSessionId = req.session.user.id; 
-    const user = await User.findById(userSessionId);
+    const user = await UserModel.findById(userSessionId);
     if (!user) {
       return res.status(404).send("User not found");
     }
