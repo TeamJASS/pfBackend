@@ -100,7 +100,8 @@ export const patchEducation = async (req, res, next) => {
 
     res.status(201).json({ Education });
   } catch (error) {
-    return res.status(500).json({error})
+    console.log(error)
+    // return res.status(500).json({error})
   }
 };
 
