@@ -1,6 +1,6 @@
 import { Skill } from "../models/skills.js";
-import { skillSchema } from "../schema/user_schema.js";
-import { User } from "../models/user.js";
+import { UserModel } from "../models/user.js";
+import { skillSchema } from "../schemas/schema.js";
 
 
 
@@ -44,7 +44,7 @@ export const getSkills = async (req, res, next) => {
 
   export const addSkills = async ( req, res ) => {
     try {
-      const { error, value } = skillsSchema.validate(req.body);
+      const { error, value } = skillSchema.validate(req.body);
   
       if (error) {
         return res.status(400).send(error.details[0].message);
@@ -52,7 +52,7 @@ export const getSkills = async (req, res, next) => {
   
       const userSessionId = req.session.user.id;
      
-      const user = await User.findById(userSessionId);
+      const user = await UserModel.findById(userSessionId);
       if (!user) {
         return res.status(404).send("User not found");
       }
@@ -82,7 +82,7 @@ export const patchSkills = async (req, res, next) => {
     }
 
     const userSessionId = req.session.user.id; 
-    const user = await User.findById(userSessionId);
+    const user = await UserModel.findById(userSessionId);
     if (!user) {
       return res.status(404).send("User not found");
     }
@@ -106,7 +106,7 @@ export const patchSkills = async (req, res, next) => {
   export const deletedSkills = async (req, res, next) => {
     try {
       const userSessionId = req.session.user.id; 
-      const user = await User.findById(userSessionId);
+      const user = await UserModel.findById(userSessionId);
       if (!user) {
         return res.status(404).send("User not found");
       }

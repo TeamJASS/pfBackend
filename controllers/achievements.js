@@ -1,6 +1,6 @@
 import { Achievement } from "../models/achievements.js"
-import { achievementSchema } from "../schema/user_schema.js"
-import { User } from "../models/user.js"
+import { achievementSchema } from "../schemas/schema.js";
+import { UserModel } from "../models/user.js"
 
 
 
@@ -35,7 +35,7 @@ try {
 
   const userSessionId = req.session.user.id;
  
-  const user = await User.findById(userSessionId);
+  const user = await UserModel.findById(userSessionId);
   if (!user) {
     return res.status(404).send("User not found");
   }
@@ -142,7 +142,7 @@ try {
   }
 
   const userSessionId = req.session.user.id; 
-  const user = await User.findById(userSessionId);
+  const user = await UserModel.findById(userSessionId);
   if (!user) {
     return res.status(404).send("User not found");
   }
