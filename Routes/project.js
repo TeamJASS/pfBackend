@@ -6,20 +6,20 @@ import {  getProject, postproject, patchProject, getProjects, deletedProject } f
 const projectRouter = Router();
 
 // get a project router
-projectRouter.get('/project', getProject);
+projectRouter.get('/projects', getProject);
 
 // Add Project
-projectRouter.post('/project', postproject);
+projectRouter.post('/projects', postproject);
 // ', localUpload.single('image')
 
 //update patch 
-projectRouter.patch('/project/:id', patchProject);
+projectRouter.patch('/projects/:id', patchProject);
 
 // Delete
-projectRouter.delete('/project/:id', deletedProject);
+projectRouter.delete('/projects/:id', deletedProject);
 
 // a method that will Get a single Project
-projectRouter.get('/project/:id', getProjects);
+projectRouter.get('/projects/:id', getProjects);
 
 
 // Export router

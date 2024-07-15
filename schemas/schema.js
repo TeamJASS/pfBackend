@@ -5,8 +5,7 @@ export const registerSchema = joi.object({
     lastname:joi.string().required(),
     username: joi.string().required(),
     email: joi.string().email().required(),
-    password: joi.string().required(),
-    confirmPassword: joi.string().valid(joi.ref('password')).required(),
+    password: joi.string().required()
 });
 
 export const loginSchema = joi.object({
@@ -24,12 +23,12 @@ export const userProfileSchema = joi.object({
     bio: joi.string(),
     about: joi.string(),
     dateOfBirth: joi.date(),
-    contact: joi.string().required(),
-    resume: joi.string().required(),
+    contact: joi.string(),
+    resume: joi.string(),
     githubLink: joi.string().uri().optional(),
     linkedIn: joi.string().uri().optional(),
     twitterLink: joi.string().uri().optional(),
-    createdBy: joi.string().required()
+    user: joi.string()
 
 })
 
