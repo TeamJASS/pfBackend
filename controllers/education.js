@@ -1,34 +1,58 @@
 import { Education } from "../models/education.js"
 import { educationSchema } from "../schema/user_schema.js"
+import { User } from "../models/user.js"
 
 
-// export const education = async ( req, res ) => {
 
-//   const {error, value} = educationSchema.validate(req.body)
-//   if (education.length = 0) {
-//     return res.status(404).send('N education added')
-//   }
+  // Add Education
 
-//   export const
-//     res.status(200).json(education);
+  export const addEducation = async ( req, res ) => {
 
-// }
+  try {
+    const { error, value } = educationSchema.validate(req.body);
+    if (error) {
+      return res.status(400).send(error.details[0].message);
+    }
 
-//  another error handling for getting an ed. without adding
+    //then, find the user with the id that user passed when adding the education
+    console.log('userId',req.session.user.id)
+    const userSessionId = req.session.user.id
+    const user = await User.findById(userSessionId);
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
 
+    //create education with the value
+    const education = await Education.create({...value, user:userSessionId});
+    //if you find the user, push the education id you just created inside
+    user.education.push(education._id);
 
+    //and save the user now with the educationId
+    await user.save();
+
+    //return the education
+    res.status(201).json({ education });
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
 
 
 
  // Get all Education
   export const allEducation = async (req, res, next) => {
-    try {
-        const alEducation = await Education.find(req.params);
-        res.json(alEducation);
-    } catch (error) {
-        next(error);
-    }
+
+try {
+  //we are fetching education that belongs to a particular user
+  const userSessionId = req.session.user.id
+  const aleducation = await Education.find({ user: userSessionId });
+  if (aleducation.length == 0) {
+    return res.status(404).send("No education added");
+  }
+  res.status(200).json({ education: aleducation });
+} catch (error) {}
 };
+
 
 
 
@@ -50,102 +74,33 @@ export const getEducation = async (req, res, next) => {
     }
   };
   
-  // Post Education
-
-  // 1st process
-  // export const postEducation = async (req, res, next) => {
-  //   try {
-  //     // Add Education to database
-  //     const allEducation = await Education.create({
-  //       ...req.body,
-  //     image: req.file.filename
-  //     });
-  //     // return response
-  //     res.json(allEducation);
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // };
-  
-
-  // masbsjd
-  export const addEducation = async ( req, res ) => {
-    try {
-      const {error, value} = educationSchema.validate(req.body)
-    if (error) {
-      return res.status(400).send(error.details[0].message)
-    } 
-    console.log('value', value) 
-    
-    const education = await Education.create(value)
-    res.status(201).json({education:education})
-    
-    } catch (error) {
-      return res.status(500).send(error)
-    }
-  };
-    
-  
-
-// poiuhyegdhj
-  //   export const addEducation = async (req, res) => {
-  //     try {
-  //         // Validate request body
-  //         const { error, value } = educationSchema.validate(req.body);
-  //         if (error) {
-  //             return res.status(400).send(error.details[0].message);
-  //         }
-  
-  //         // Log the validated value
-  //         console.log('value', value);
-  
-  //         // Add education to the database
-  //         const education = await Education.create(value);
-  
-  //         // Return response
-  //         res.status(201).json({ education });
-  //     } catch (error) {
-  //         console.error('Error adding education:', error);
-  //         return res.status(500).send('An error occurred while adding education.');
-  //     }
-  // };
-  
 
 
 
-
-
-  // Patch Education
-  // 1st
-  // export const editEducation = (req, res) => {
-  //   res.json(`Education updated with ${req.params.id} updated`)
-  // };
-
-
+  // Update Education
 
 export const patchEducation = async (req, res, next) => {
   try {
-      // Validate request body
-      const { error, value } = educationSchema.validate(req.body);
-      if (error) {
-          return res.status(400).send(error.details[0].message);
+    const { error, value } = educationSchema.validate(req.body);
+
+    if (error) {
+      return res.status(400).send(error.details[0].message);
+    }
+
+    const userSessionId = req.session.user.id; 
+    const user = await User.findById(userSessionId);
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    const Education = await Education.findByIdAndUpdate(req.params.id, value, { new: true });
+      if (!Education) {
+          return res.status(404).send("Education not found");
       }
 
-      // Find and update the education record
-      const updatedEducation = await Education.findByIdAndUpdate(
-          req.params.id,
-          value,
-          { new: true, runValidators: true }
-      );
-
-      if (!updatedEducation) {
-          return res.status(404).send('Education record not found');
-      }
-
-      // Returns the updated education record
-      res.json(updatedEducation);
+    res.status(201).json({ Education });
   } catch (error) {
-      next(error);
+    return res.status(500).json({error})
   }
 };
 
@@ -153,32 +108,25 @@ export const patchEducation = async (req, res, next) => {
 
   
   //Delete Education
-  // 1st
-  // export const deletedEducation = async (req, res, next) => {
-  //   try {
-  //     // Delete by Id
-  //     const deletedEducation = await Education.findByIdAndDelete(req.params.id);
-  //     // Return response
-  //     res.json(deletedEducation);
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // };
-  
  
-  export const deletedEducation = async (req, res, next) => {
-    try {
-        // Delete by ID
-        const delEducation = await Education.findByIdAndDelete(req.params.id);
-
-        // Check if the record was not found and deleted
-        if (!delEducation) {
-            return res.status(404).send('Education record not found');
-        }
-
-        // Return response indicating successful deletion
-        res.status(200).json({ message: 'Education record deleted successfully', deletedEducation });
-    } catch (error) {
-        next(error);
+  export const deletedEducation = async (req, res, next) => {    
+  try {
+     
+    const userSessionId = req.session.user.id; 
+    const user = await User.findById(userSessionId);
+    if (!user) {
+      return res.status(404).send("User not found");
     }
+
+    const education = await Education.findByIdAndDelete(req.params.id);
+      if (!education) {
+          return res.status(404).send("Education not found");
+      }
+
+      user.education.pull(req.params.id);
+      await user.save();
+    res.status(200).json("Education deleted");
+  } catch (error) {
+    return res.status(500).json({error})
   }
+};
