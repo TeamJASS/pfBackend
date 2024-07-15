@@ -7,27 +7,13 @@ import { UserModel } from "../models/user.js"
  // Post Achievements
 
  export const addAchievements = async ( req, res ) => {
-//   try {
-//     const {error, value} = achievementSchema.validate(req.body)
-//   if (error) {
-//     return res.status(400).send(error.details[0].message)
-//   } 
-//   console.log('value', value) 
-  
-//   const achievements = await Achievement.create(value)
-//   res.status(201).json({achievements:achievements})
-  
-//   } catch (error) {
-//     return res.status(500).send(error)
-//   }
-// };
-  
 
 try {
   const { error, value } = achievementSchema.validate({  
     ...req.body,
-    award: req.files.award[0].filename,
-    image: req.files.image[0].filename,});
+    // award: req.files.award[0].filename,
+    
+    image: req.file.filename,});
 
   if (error) {
     return res.status(400).send(error.details[0].message);
@@ -56,14 +42,6 @@ try {
 
  // Get all Achievements
   export const allAchievements = async (req, res, next) => {
-//     try {
-//         const alAchievements = await Achievement.find(req.params);
-//         res.json(alAchievements);
-//     } catch (error) {
-//         next(error);
-//     }
-// };
-
 try {
   // fetch Achievements that belongs to a particular user
   const userSessionId = req.session.user.id

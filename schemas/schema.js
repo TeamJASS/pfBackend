@@ -67,7 +67,7 @@ export const educationSchema = joi.object({
 });
 
 export const achievementSchema = joi.object({
-    awards: joi.string(),
+    award: joi.string(),
     description: joi.string(),
     image: joi.string(),
     date: joi.string(),
@@ -95,7 +95,6 @@ export const volunteeringSchema = joi.object({
     skills: joi.string(),
     link: joi.string().uri().optional(),
     nameOfInstitution: joi.string(),
-    roles: joi.string(),
     responsbility: joi.string(),
     location: joi.string(),
     projectName: joi.string().optional(),

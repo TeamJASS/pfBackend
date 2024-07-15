@@ -9,6 +9,8 @@ const experienceSchema = new Schema({
   location: { type: String },
   startDate: { type: String },
   endDate: { type: String },
+  user: { type: Types.ObjectId, ref: 'User' }
+
 });
 
 experienceSchema.plugin(toJSON);

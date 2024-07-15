@@ -5,37 +5,35 @@ import { UserModel } from "../models/user.js"
 
 export const register = async (req, res, next) => {
 
-    try {
-        //validate request
-        const { value, error } = registerSchema.validate(req.body);
 
-        if (error) {
-            return res.status(422).json(error);
-        }
-        //check if username exists
+    //validate request
+    const { value, error } = registerSchema.validate(req.body);
 
-        const existingUser = await UserModel.findOne({ username: value.username });
-
-        if (existingUser) {
-            return res.status(409).json("Username already exists");
-        }
-        // encrypt user password
-        const hashedPassword = bcrypt.hashSync(value.password, 10);
-        //create user
-        await UserModel.create({
-            ...value,
-            password: hashedPassword
-        });
-        //return response
-        res.status(201).json("User registered");
-
-
-    } catch (error) {
-        next(error)
+    if (error) {
+        return res.status(400).send(error.details[0].message);
     }
+    //check if username exists
 
+
+    const email = value.email;
+
+    const findIfUserExist = await UserModel.findOne({ email });
+    if (findIfUserExist) {
+        return res.status(401).send("User has already signed up");
+    } else {
+
+        // encrypt user password
+        const hashedPassword = await bcrypt.hash(value.password, 12);
+        value.password = hashedPassword;
+
+        const addUser = await UserModel.create(value);
+
+        req.session.user = { id: addUser.id };
+
+        return res.status(201).send(addUser);
+
+    }
 }
-
 
 export const login = async (req, res, next) => {
     try {
