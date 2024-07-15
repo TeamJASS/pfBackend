@@ -10,8 +10,7 @@ export const register = async (req, res, next) => {
         const { value, error } = registerSchema.validate(req.body);
 
         if (error) {
-            return res.status(422).json(error);
-        }
+            return res.status(400).send(error.details[0].message);        }
         //check if username exists
 
         const existingUser = await UserModel.findOne({ username: value.username });
@@ -77,37 +76,37 @@ export const login = async (req, res, next) => {
 
 export const getUser = async (req, res, next) => {
     try {
-        const userName = req.params.username.toLowerCase();
-        console.log("welcome", userName)
+        const username = req.params.username.toLowerCase();
         const options = { sort: { startDate: -1 } }
-        const userDetails = await UserModel.findOne({ userName })
-            .populate({
-                path: "education",
-                options,
-            })
-            .populate("userProfile")
-            .populate("skills")
+        const userDetails = await UserModel.findOne({ username })
+        .populate("userProfile")
+            // .populate({
+            //     path: "education",
+            //     options,
+            // })
+            
+            // .populate("skills")
 
-            .populate({
-                path: "achievements",
-                options: { sort: { date: -1 } },
-            })
-            .populate({
-                path: "experiences",
-                options,
-            })
-            .populate({
-                path: "volunteering",
-                options,
-            })
-            .populate({
-                path: 'projects',
-                options
-            });
+            // .populate({
+            //     path: "achievements",
+            //     options: { sort: { date: -1 } },
+            // })
+            // .populate({
+            //     path: "experiences",
+            //     options,
+            // })
+            // .populate({
+            //     path: "volunteering",
+            //     options,
+            // })
+            // .populate({
+            //     path: 'projects',
+            //     options
+            // });
 
-        return res.status(200).json({ userName: userDetails });
+        return res.status(200).json({ username: userDetails });
     } catch (error) {
-        next()
+        console.log(error)
     }
 };
 
