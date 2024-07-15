@@ -10,16 +10,16 @@ experienceRouter.get('/experience/:id', allExperience);
 
 
 // Add  all experience record
-experienceRouter.post('/experience', addExperience);
+experienceRouter.post('/experiences', addExperience);
 
 //update/ patch 
-experienceRouter.patch('/experience/:id', patchExperience);
+experienceRouter.patch('/experiences/:id', patchExperience);
 
 // Delete
-experienceRouter.delete('/experience/:id', deletedExperience);
+experienceRouter.delete('/experiences/:id', deletedExperience);
 
 // a method that will Get a all experience records
-experienceRouter.get('/experience', getExperience);
+experienceRouter.get('/experiences', getExperience);
 
 
 

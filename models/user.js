@@ -8,7 +8,6 @@ const userSchema = new Schema({
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    confirmPassword: { type: String, required: true },
     termsAndConditions: { type: Boolean }, 
     education: [{ type: Types.ObjectId, ref: 'Education' }],
     skills: [{ type: Types.ObjectId, ref: 'Skill' }],

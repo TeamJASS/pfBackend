@@ -10,6 +10,8 @@ import projectRouter from "./Routes/project.js";
 import achievementsRouter from "./Routes/achievements.js";
 import experienceRouter from "./Routes/experience.js";
 import skillsRouter from "./Routes/skills.js";
+import { volunteeringRouter } from "./Routes/volunteering.js";
+
 
 //DB Connection String
 await mongoose.connect(process.env.MONGO_URL)
@@ -27,7 +29,7 @@ expressOasGenerator.handleResponses(app, {
 
 // use middleware
 
-app.use(cors());
+app.use(cors({credentials:true ,origin:"*"}));
 app.use(express.json());
 app.use(session({
     secret:process.env.SESSION_SECRET,
@@ -47,7 +49,7 @@ app.use("/api/v1", projectRouter);
 app.use("/api/v1", experienceRouter);
 app.use("/api/v1", achievementsRouter);
 app.use("/api/v1", skillsRouter);
-
+app.use("/api/v1", volunteeringRouter);
 
 expressOasGenerator.handleRequests();
 app.use((req, res) => res.redirect('/api-docs/'));
