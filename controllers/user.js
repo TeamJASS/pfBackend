@@ -92,7 +92,7 @@ export const getUser = async (req, res, next) => {
                 options: { sort: { date: -1 } },
             })
             .populate({
-                path: "experiences",
+                path: "experience",
                 options,
             })
             .populate({
