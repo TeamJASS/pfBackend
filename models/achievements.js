@@ -8,6 +8,12 @@ const achievementSchema = new Schema({
  date: { type: String },
   nameOfInstitution: { type: String },
   user: { type: Types.ObjectId, ref: "User" ,select: false},
+  program: { type: String },
+  qualification: { type: String },
+  grade: { type: String },
+  startDate: { type: String },
+  endDate: { type: String },
+  user: { type: Types.ObjectId, ref: "User" },
 });
 
 achievementSchema.plugin(toJSON);
