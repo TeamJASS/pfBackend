@@ -18,7 +18,7 @@ userRouter.post("/auth/token", token);
 
 userRouter.get("/auth/:username", getUser);
 
-userRouter.get("/users", getUsers);
+userRouter.get("/auth/users", getUsers);
 
 userRouter.get("/users/userProfile", checkUserSession, getUserProfile);
 
@@ -44,7 +44,7 @@ userRouter.patch(
     updateUserProfile
 );
 
-userRouter.post("/users/logout", checkUserSession, logout);
+userRouter.post("/auth/users/logout", checkUserSession, logout);
 
 
 export default userRouter
