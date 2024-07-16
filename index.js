@@ -55,8 +55,6 @@ expressOasGenerator.handleRequests();
 app.use((req, res) => res.redirect('/api-docs/'));
 
 
-
-
 // server set up
 app.listen (1020,() => {
     console.log ("Live on 1020")
