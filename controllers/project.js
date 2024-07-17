@@ -20,29 +20,11 @@ export const getProjects = async (req, res, next) => {
 
 
 
-// Get a project
-export const getProject = async (req, res, next) => {
-  try {
-    // Get query Params
-    const { limit, skip, filter } = req.query;
-    // Get all Project from database
-    const project = await Project.find({ name: filter })
-      .limit(limit)
-      .skip(skip);
-    // Return all project as response
-    res.json(project);
-  } catch (error) {
-    next(error);
-  }
-};
-
-
-
 // Post/Create project
 
 export const postproject = async (req, res, next) => {
   try {
-    const { error, value } = projectSchema.validate({...req.body, image:req.file.filename});
+    const { error, value } = projectSchema.validate(req.body);
 
     if (error) {
       return res.status(400).send(error.details[0].message);
@@ -68,10 +50,11 @@ export const postproject = async (req, res, next) => {
 };
 
 
+
 // Patch Project
 export const patchProject = async (req, res) => {
 try {
-  const { error, value } = projectSchema.validate({...req.body, image:req.file.filename});
+  const { error, value } =  projectSchema.validate(req.body);
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
@@ -89,7 +72,7 @@ try {
 
   res.status(200).json({ project });
 } catch (error) {
-  return res.status(500).json({error})
+      console.log(error);
 }
 };
 

@@ -1,14 +1,11 @@
 import { Router } from "express";
-import { allEducation, addEducation, patchEducation, deletedEducation, getEducation } from "../controllers/education.js";
+import { addEducation, patchEducation, deletedEducation, getEducation } from "../controllers/education.js";
 import { checkUserSession } from "../middleware/auth.js";
 import { remoteUpload } from "../middleware/uploads.js";
 
 
 // Create a Router
 const educationRouter = Router();
-
-// get an Education record
-educationRouter.get('/users/education/:id',checkUserSession, allEducation);
 
 
 // Add  an Education record

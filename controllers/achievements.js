@@ -53,24 +53,6 @@ try {
 }
 };
 
-
-export const getAchievements = async (req, res, next) => {
-    try {
-      // Get query Params
-      const { limit, skip, filter } = req.query;
-      // Get all Achievements from database
-      const allAchievements = await  Achievement
-      .find({ name: filter })
-      .limit(limit)
-      .skip(skip);
-      // Return all Achievements as response
-      res.json(allAchievements);
-    } catch (error) {
-      next(error);
-  
-    }
-  };
-  
  
 
 

@@ -15,7 +15,6 @@ import { educationSchema } from "../schemas/schema.js";
         return res.status(400).send(error.details[0].message);
       }
 
-
     //then, find the user with the id that user passed when adding the education
     console.log('userId',req.session.user.id)
     const userSessionId = req.session.user.id

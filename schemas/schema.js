@@ -36,7 +36,7 @@ export const userProfileSchema = joi.object({
 
 export const skillSchema = joi.object({
     name: joi.string().required(),
-    levelOfProficency: joi.string().valid("Beginner", "Intermediate", "Advance", "Expert").optional(),
+    levelOfProficiency: joi.string().valid("Beginner", "Intermediate", "Advance", "Expert"),
     user: joi.string()
 });
 
@@ -57,7 +57,8 @@ export const educationSchema = joi.object({
     location: joi.string(),
     description: joi.string().optional(),
     program: joi.string().required(),
-    image: joi.string().uri().optional(),
+    image: joi.string(),
+    // .uri().optional(),
     grade: joi.string().optional(),
     startDate: joi.string(),
     endDate: joi.string(),
@@ -72,7 +73,6 @@ export const achievementSchema = joi.object({
     date: joi.string(),
     nameOfInstitution: joi.string(),
     user: joi.string()
-
 });
 
 export const projectSchema = joi.object({
@@ -80,7 +80,7 @@ export const projectSchema = joi.object({
     description: joi.string(),
     contribution: joi.string(),
     skills: joi.string(),
-    link: joi.string().uri().optional(),
+    link: joi.string(),
     nameOfInstitution: joi.string(),
     startDate: joi.string(),
     endDate: joi.string(),
