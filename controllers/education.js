@@ -1,5 +1,5 @@
-import { Education } from "../models/education.js"
-import { UserModel } from "../models/user.js"
+import { Education } from "../models/education.js";
+import { UserModel } from "../models/user.js";
 import { educationSchema } from "../schemas/schema.js";
 
 
@@ -9,14 +9,17 @@ import { educationSchema } from "../schemas/schema.js";
   export const addEducation = async ( req, res ) => {
 
   try {
-    const { error, value } = educationSchema.validate(req.body);
+    const { error, value } = educationSchema.validate({
+      ...req.body,
+      image: req.file.filename});
     if (error) {
       return res.status(400).send(error.details[0].message);
     }
 
     //then, find the user with the id that user passed when adding the education
-    console.log('userId',req.session.user.id)
-    const userSessionId = req.session.user.id
+    // console.log('userId',req.session.user.id)
+    const userSessionId = req.session?.user.id || req?.user?.id;
+
     const user = await UserModel.findById(userSessionId);
     if (!user) {
       return res.status(404).send("User not found");
@@ -24,6 +27,7 @@ import { educationSchema } from "../schemas/schema.js";
 
     //create education with the value
     const education = await Education.create({...value, user:userSessionId});
+    
     //if you find the user, push the education id you just created inside
     user.education.push(education._id);
 
@@ -33,7 +37,7 @@ import { educationSchema } from "../schemas/schema.js";
     //return the education
     res.status(201).json({ education });
   } catch (error) {
-    return res.status(500).send(error);
+    console.log(error);
   }
 };
 
@@ -44,7 +48,7 @@ import { educationSchema } from "../schemas/schema.js";
 
 try {
   //we are fetching education that belongs to a particular user
-  const userSessionId = req.session.user.id
+  const userSessionId = req.session?.user.id || req?.user?.id;
   const aleducation = await Education.find({ user: userSessionId });
   if (aleducation.length == 0) {
     return res.status(404).send("No education added");
@@ -87,7 +91,7 @@ export const patchEducation = async (req, res, next) => {
       return res.status(400).send(error.details[0].message);
     }
 
-    const userSessionId = req.session.user.id; 
+    const userSessionId = req.session?.user.id || req?.user?.id;
     const user = await UserModel.findById(userSessionId);
     if (!user) {
       return res.status(404).send("User not found");
@@ -113,7 +117,7 @@ export const patchEducation = async (req, res, next) => {
   export const deletedEducation = async (req, res, next) => {    
   try {
      
-    const userSessionId = req.session.user.id; 
+    const userSessionId = req.session?.user.id || req?.user?.id;
     const user = await UserModel.findById(userSessionId);
     if (!user) {
       return res.status(404).send("User not found");

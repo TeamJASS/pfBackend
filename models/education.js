@@ -8,7 +8,7 @@ const educationSchema = new Schema(
           location: { type: String },
           description: { type: String },
           program: { type: String },
-          image: { type: String },
+          // image: { type: String },
           grade: { type: String },
           startDate: { type: String },
           endDate: { type: String },
@@ -18,4 +18,4 @@ const educationSchema = new Schema(
 
 educationSchema.plugin(toJSON);
 
-export const Education = model("Education", educationSchema); 
+export const Education = model("Education", educationSchema);

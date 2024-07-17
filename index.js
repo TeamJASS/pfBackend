@@ -21,23 +21,23 @@ console.log("Database is connected")
 const app = express();
 expressOasGenerator.handleResponses(app, {
     alwaysServeDocs: true,
-    tags: ['auth','userProfile', 'skills', 'projects', 'volunteering', 'experiences', 'education', 'achievements'],
+    tags: ['auth', 'userProfile', 'skills', 'projects', 'volunteering', 'experiences', 'education', 'achievements'],
     mongooseModels: mongoose.modelNames()
-    
-    
+
+
 })
 
 // use middleware
 
-app.use(cors({credentials:true ,origin:"*"}));
+app.use(cors({ credentials: true, origin: "*" }));
 app.use(express.json());
 app.use(session({
-    secret:process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     // cookie: { secure: true }
-    store:MongoStore.create({
-        mongoUrl:process.env.MONGO_URL
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGO_URL
     })
 
 }))
@@ -58,6 +58,6 @@ app.use((req, res) => res.redirect('/api-docs/'));
 
 
 // server set up
-app.listen (1020,() => {
-    console.log ("Live on 1020")
+app.listen(1020, () => {
+    console.log("Live on 1020")
 });

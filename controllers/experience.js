@@ -7,7 +7,7 @@ import { experienceSchema } from "../schemas/schema.js";
   export const allExperience = async (req, res, next) => {
     try {
       //we are fetching Experience that belongs to a particular user
-      const userSessionId = req.session.user.id
+      const userSessionId = req.session?.user.id || req?.user?.id;
       const alExperience = await Experience.find({ user: userSessionId });
       if (alExperience.length == 0) {
         return res.status(404).send("No Experience added");
@@ -49,7 +49,7 @@ export const getExperience = async (req, res, next) => {
         return res.status(400).send(error.details[0].message);
       }
   
-      const userSessionId = req.session.user.id;
+      const userSessionId = req.session?.user.id || req?.user?.id;
      
   
       const user = await UserModel.findById(userSessionId);
@@ -83,7 +83,7 @@ try {
         return res.status(400).send(error.details[0].message);
       }
   
-      const userSessionId = req.session.user.id; 
+      const userSessionId = req.session?.user.id || req?.user?.id;
       const user = await UserModel.findById(userSessionId);
       if (!user) {
         return res.status(404).send("User not found");
@@ -108,7 +108,7 @@ try {
   
   export const deletedExperience = async (req, res, next) => {
     try {
-      const userSessionId = req.session.user.id; 
+      const userSessionId = req.session?.user.id || req?.user?.id; 
       const user = await UserModel.findById(userSessionId);
       if (!user) {
         return res.status(404).send("User not found");
