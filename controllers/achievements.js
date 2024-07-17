@@ -39,9 +39,6 @@ try {
 
  // Get all Achievements
   export const allAchievements = async (req, res, next) => {
-
-
-
 try {
   // fetch Achievements that belongs to a particular user
   const userSessionId = req.session.user.id
