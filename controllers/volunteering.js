@@ -96,3 +96,12 @@ export const deleteUserVolunteering = async (req, res) => {
     return res.status(500).json({ error });
   }
 };
+
+export const getVolunteering =  async (req, res,next) => {
+  try {
+      const getVolunteering =await Volunteering.findById(req.params.id);
+      res.status(200).json(getVolunteering);
+  } catch (error) {
+      next(error);
+  }
+};
