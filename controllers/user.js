@@ -110,7 +110,7 @@ export const token = async (req, res, next) => {
 
 
         //return response
-        res.status(200).json({
+        res.status(201).json({
             message: "User logged in",
             accessToken: token
 
@@ -180,7 +180,7 @@ export const getUsers = async (req, res) => {
 
     const users = await UserModel.find(filter);
 
-    return res.status(200).json({ sessionId: req.session.id, user: userDetails });
+    return res.status(200).json({ users });
 };
 
 

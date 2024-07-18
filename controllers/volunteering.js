@@ -28,7 +28,7 @@ export const createUserVolunteering = async (req, res) => {
 
     res.status(201).json({ volunteering });
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 
