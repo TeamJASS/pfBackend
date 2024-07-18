@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { allSkills, addSkills, patchSkills, deletedSkills } from "../controllers/skills.js";
+import { allSkills, getSkills, addSkills, patchSkills, deletedSkills } from "../controllers/skills.js";
 import { checkUserSession } from "../middleware/auth.js";
 
 // Create a Router
@@ -19,8 +19,8 @@ skillsRouter.patch('/users/skills/:id', checkUserSession, patchSkills);
 // Delete
 skillsRouter.delete('/users/skills/:id', checkUserSession, deletedSkills);
 
-// a method that will Get a all skills records
-// skillsRouter.get('/users/skills', getSkills);
+// a method that will Get a skill record by ID
+skillsRouter.get('/users/skills/:id',checkUserSession, getSkills);
 
 
 

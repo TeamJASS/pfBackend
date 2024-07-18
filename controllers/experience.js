@@ -9,39 +9,28 @@ import { experienceSchema } from "../schemas/schema.js";
       //we are fetching Experience that belongs to a particular user
       const userSessionId = req.session?.user?.id || req?.user.id;
       const alExperience = await Experience.find({ user: userSessionId });
-      if (alExperience.length == 0) {
-        return res.status(404).send("No Experience added");
-      }
+      // if (alExperience.length == 0) {
+      //   return res.status(404).send("No Experience added");
+      // }
       res.status(200).json({ Experience: alExperience });
     } catch (error) {
-      return res.status(500).json({error})
+     next(error);
     }
   };
 
 
-// // Get a single Experience record
-// export const getExperience = async (req, res, next) => {
-//     try {
-//       // Get query Params
-//       const { limit, skip, filter } = req.query;
-//       // Get all Experience from database
-//       const allExperience = await  Experience
-//       .find({ name: filter })
-//       .limit(limit)
-//       .skip(skip);
-//       // Return all Experience as response
-//       res.json(allExperience);
-//     } catch (error) {
-//       next(error);
-  
-//     }
-//   };
-
-
-
+// Get an Experience record by ID
+export const getExperience =  async (req, res,next) => {
+  try {
+      const getExperience =await Experience.findById(req.params.id);
+      res.status(200).json(getExperience);
+  } catch (error) {
+      next(error);
+  }
+};
   
   // Create/Add Experience
-  export const addExperience = async ( req, res ) => {
+  export const addExperience = async ( req, res, next ) => {
     try {
       const { error, value } = experienceSchema.validate(req.body);
   
@@ -65,7 +54,7 @@ import { experienceSchema } from "../schemas/schema.js";
   
       res.status(201).json({ experience });
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   };
 
@@ -96,7 +85,7 @@ try {
   
       res.status(200).json({ experience });
     } catch (error) {
-      console.log(error.message);
+      next(error);
     }
   };
 
@@ -122,6 +111,6 @@ try {
         await user.save();
       res.status(200).json("Experience deleted");
     } catch (error) {
-      console.log(error.message);
+      next(error);
     }
   };

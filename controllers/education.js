@@ -6,21 +6,21 @@ import { educationSchema } from "../schemas/schema.js";
 
   // Add Education
 
-  export const addEducation = async ( req, res ) => {
+  export const addEducation = async ( req, res, next ) => {
     try {
       const { error, value } =educationSchema.validate({  
         ...req.body,
         image: req.file.filename});
-      if (error) {
-        return res.status(400).send(error.details[0].message);
-      }
+      // if (error) {
+      //   return res.status(400).send(error.details[0].message);
+      // }
 
     //then, find the user with the id that user passed when adding the education
     console.log('userId',req.session.user.id)
     const userSessionId = req.session.user.id
     const user = await UserModel.findById(userSessionId);
     if (!user) {
-      return res.status(404).send("User not found");
+      return res.status(404).send({message: "User not found"});
     }
 
     //create education with the value
@@ -34,46 +34,40 @@ import { educationSchema } from "../schemas/schema.js";
     //return the education
     res.status(201).json({ education });
   } catch (error) {
-    return res.status(500).send(error);
+    next(error);
   }
 };
 
 
 
  // Get all Education
-  export const allEducation = async (req, res, next) => {
+  export const allC = async (req, res, next) => {
 
 try {
   //we are fetching education that belongs to a particular user
   const userSessionId = req.session.user.id
   const aleducation = await Education.find({ user: userSessionId });
-  if (aleducation.length == 0) {
-    return res.status(404).send("No education added");
-  }
+  // if (aleducation.length == 0) {
+  //   return res.status(404).send({message: "No education added"});
+  // }
   res.status(200).json({ education: aleducation });
-} catch (error) {}
+} catch (error) {
+  next(error);
+}
 };
 
 
 
 
-// Get a single Educational record
-export const getEducation = async (req, res, next) => {
-    try {
-      // Get query Params
-      const { limit, skip, filter } = req.query;
-      // Get all Education from database
-      const allEducation = await  Education
-      .find({ name: filter })
-      .limit(limit)
-      .skip(skip);
-      // Return all Education as response
-      res.json(allEducation);
-    } catch (error) {
+// Get an Educational record by ID
+export const getEducation =  async (req, res,next) => {
+  try {
+      const getEducation =await Education.findById(req.params.id);
+      res.status(200).json(getEducation);
+  } catch (error) {
       next(error);
-  
-    }
-  };
+  }
+};
   
 
 
@@ -91,17 +85,17 @@ export const patchEducation = async (req, res, next) => {
     const userSessionId = req.session.user.id; 
     const user = await UserModel.findById(userSessionId);
     if (!user) {
-      return res.status(404).send("User not found");
+      return res.status(404).send({message: "User not found"});
     }
 
     const Education = await Education.findByIdAndUpdate(req.params.id, value, { new: true });
       if (!Education) {
-          return res.status(404).send("Education not found");
+          return res.status(404).send({message: "Education not found"});
       }
 
     res.status(201).json({ Education });
   } catch (error) {
-    console.log(error)
+    next(error)
     // return res.status(500).json({error})
   }
 };
@@ -117,18 +111,18 @@ export const patchEducation = async (req, res, next) => {
     const userSessionId = req.session.user.id; 
     const user = await UserModel.findById(userSessionId);
     if (!user) {
-      return res.status(404).send("User not found");
+      return res.status(404).send({message: "User not found"});
     }
 
     const education = await Education.findByIdAndDelete(req.params.id);
       if (!education) {
-          return res.status(404).send("Education not found");
+          return res.status(404).send({message: "Education not found"});
       }
 
       user.education.pull(req.params.id);
       await user.save();
-    res.status(200).json("Education deleted");
+    res.status(200).json({message: "Education deleted"});
   } catch (error) {
-    return res.status(500).json({error})
+    next(error)
   }
 };

@@ -11,12 +11,12 @@ export const allSkills = async (req, res, next) => {
     //we are fetching Skill that belongs to a particular user
     const userSessionId = req.session?.user?.id || req?.user.id;
     const allSkill = await Skill.find({ user: userSessionId });
-    if (allSkill.length == 0) {
-      return res.status(404).send("No Skill added");
-    }
+    // if (allSkill.length == 0) {
+    //   return res.status(404).send("No Skill added");
+    // }
     res.status(200).json({ Skills: allSkill });
   } catch (error) {
-    return res.status(500).json({error})
+    next(error);
   }
 };
 
@@ -24,7 +24,7 @@ export const allSkills = async (req, res, next) => {
 
   // Post Skills
 
-  export const addSkills = async ( req, res ) => {
+  export const addSkills = async ( req, res, next ) => {
     try {
       const { error, value } = skillSchema.validate(req.body);
   
@@ -46,9 +46,21 @@ export const allSkills = async (req, res, next) => {
   
       res.status(201).json({ skill });
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   };
+
+
+// Get a Skills record by ID
+export const getSkills =  async (req, res,next) => {
+  try {
+      const getSkills =await Skill.findById(req.params.id);
+      res.status(200).json(getSkills);
+  } catch (error) {
+      next(error);
+  }
+};
+
 
 
 
@@ -75,7 +87,7 @@ export const patchSkills = async (req, res, next) => {
 
     res.status(200).json({ skill });
   } catch (error) {
-    console.log(error.message);
+    next(error);
   }
 };
 
@@ -101,7 +113,7 @@ export const patchSkills = async (req, res, next) => {
         await user.save();
       res.status(200).json("Skill deleted");
     } catch (error) {
-      console.log(error.message);
+      next(error);
     }
   };
   
