@@ -20,7 +20,7 @@ achievementsRouter.delete('/users/achievements/:id', deletedAchievements);
 
 
 // a method that will Get a all achievements records
-achievementsRouter.get('/users/achievements', getAchievements);
+// achievementsRouter.get('/users/achievements', getAchievements);
 
 
 // Export router
