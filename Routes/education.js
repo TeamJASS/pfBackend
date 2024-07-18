@@ -20,6 +20,8 @@ educationRouter.delete('/users/education/:id', checkUserSession, deletedEducatio
 // a method that will Get a all Education records
 educationRouter.get('/users/education',checkUserSession, getEducation);
 
+// a method that will Get an achievement by id
+educationRouter.get('/users/education/:id', getEducation);
 
 
 // Export router

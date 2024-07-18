@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { allExperience, addExperience, patchExperience, deletedExperience } from "../controllers/experience.js";
+import { allExperience, getExperience, addExperience, patchExperience, deletedExperience } from "../controllers/experience.js";
 import { checkUserSession } from "../middleware/auth.js";
 
 // Create a Router
@@ -18,8 +18,8 @@ experienceRouter.patch('/users/experiences/:id', checkUserSession, patchExperien
 // Delete
 experienceRouter.delete('/users/experiences/:id', checkUserSession, deletedExperience);
 
-// a method that will Get a all experience records
-// experienceRouter.get('/experiences', getExperience);
+// a method that will Get an experience by ID
+experienceRouter.get('/users/experiences/:id', getExperience);
 
 
 

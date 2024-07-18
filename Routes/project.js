@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getProjects, postproject, patchProject, deletedProject } from "../controllers/project.js";
+import { getProjects, getProject, postproject, patchProject, deletedProject } from "../controllers/project.js";
 
 
 // Create a Router
@@ -19,7 +19,7 @@ projectRouter.patch('/users/projects/:id', patchProject);
 projectRouter.delete('/users/projects/:id', deletedProject);
 
 // a method that will Get a single Project
-// projectRouter.get('/users/project/:id', getProjects);
+projectRouter.get('/users/project/:id', getProject);
 
 
 // Export router
