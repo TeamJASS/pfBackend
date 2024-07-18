@@ -14,7 +14,7 @@ achievementsRouter.get('/users/achievements', allAchievements);
 achievementsRouter.post('/users/achievements',remoteUpload.single('image'), addAchievements);
 
 //update/ patch 
-achievementsRouter.patch('/users/achievements/:id', patchAchievements);
+achievementsRouter.patch('/users/achievements/:id', remoteUpload.single('image'), patchAchievements);
 
 // Delete
 achievementsRouter.delete('/users/achievements/:id', deletedAchievements);
