@@ -11,7 +11,10 @@ import { UserModel } from "../models/user.js"
 try {
   const { error, value } = achievementSchema.validate({  
     ...req.body,
-    image: req.file.filename});
+    // award: req.files.award[0].filename,
+    
+    image: req.file.filename,});
+
   if (error) {
     return res.status(400).send(error.details[0].message);
   }

@@ -13,9 +13,6 @@ const volunteeringSchema = new Schema({
     location: { type: String },
     projectName: { type: String },
     user: {type: Types.ObjectId, ref: 'User', select:false}
-  
- 
-
 }, {
   timestamps: true
 });
