@@ -89,6 +89,15 @@ export const projectSchema = joi.object({
 });
 
 export const volunteeringSchema = joi.object({
+    organization: joi.string(),
+    description: joi.string(),
+    skills: joi.string(),
+    link: joi.string().uri().optional(),
+    nameOfInstitution: joi.string(),
+    responsbility: joi.string(),
+    location: joi.string(),
+    projectName: joi.string().optional(),
+    user: joi.string().required()
   organisation: joi.string().required(),
   description: joi.string().required(),
   skills: joi.string(),
@@ -99,7 +108,6 @@ export const volunteeringSchema = joi.object({
   location: joi.string(),
   projectName: joi.string(),
   user: joi.string()
-
 });
 
 
