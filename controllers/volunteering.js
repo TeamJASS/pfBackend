@@ -10,7 +10,7 @@ export const createUserVolunteering = async (req, res) => {
       return res.status(400).send(error.details[0].message);
     }
 
-    const userSessionId = req.session.user.id;
+    const userSessionId = req.session?.user?.id ||req?.user?.id
 
     const user = await UserModel.findById(userSessionId);
     if (!user) {
@@ -35,7 +35,7 @@ export const createUserVolunteering = async (req, res) => {
 export const getAllUserVolunteerings = async (req, res) => {
   try {
     //we are fetching Volunteering that belongs to a particular user
-    const userSessionId = req.session.user.id;
+    const userSessionId = req.session?.user?.id ||req?.user?.id
     const allVolunteering = await Volunteering.find({ user: userSessionId });
     if (allVolunteering.length == 0) {
       return res.status(404).send("No Volunteering added");
@@ -54,7 +54,7 @@ export const updateUserVolunteering = async (req, res) => {
       return res.status(400).send(error.details[0].message);
     }
 
-    const userSessionId = req.session.user.id;
+    const userSessionId = req.session?.user?.id ||req?.user?.id
     const user = await UserModel.findById(userSessionId);
     if (!user) {
       return res.status(404).send("User not found");
@@ -77,7 +77,7 @@ export const updateUserVolunteering = async (req, res) => {
 
 export const deleteUserVolunteering = async (req, res) => {
   try {
-    const userSessionId = req.session.user.id;
+    const userSessionId = req.session?.user?.id ||req?.user?.id
     const user = await UserModel.findById(userSessionId);
     if (!user) {
       return res.status(404).send("User not found");
@@ -94,5 +94,14 @@ export const deleteUserVolunteering = async (req, res) => {
     res.status(200).json("Volunteering deleted");
   } catch (error) {
     return res.status(500).json({ error });
+  }
+};
+
+export const getVolunteering =  async (req, res,next) => {
+  try {
+      const getVolunteering =await Volunteering.findById(req.params.id);
+      res.status(200).json(getVolunteering);
+  } catch (error) {
+      next(error);
   }
 };

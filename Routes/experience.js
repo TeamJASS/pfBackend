@@ -6,7 +6,7 @@ import { allExperience, addExperience, patchExperience, deletedExperience, getEx
 const experienceRouter = Router();
 
 // get an experience record
-experienceRouter.get('/experience/:id', allExperience);
+experienceRouter.get('/experiences/:id', allExperience);
 
 
 // Add  all experience record

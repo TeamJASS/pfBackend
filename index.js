@@ -29,7 +29,7 @@ expressOasGenerator.handleResponses(app, {
 
 // use middleware
 
-app.use(cors({credentials:true ,origin:"*"}));
+app.use(cors({credentials:true ,origin:"http://localhost:5174"}));
 app.use(express.json());
 app.use(session({
     secret:process.env.SESSION_SECRET,
@@ -53,8 +53,6 @@ app.use("/api/v1", volunteeringRouter);
 
 expressOasGenerator.handleRequests();
 app.use((req, res) => res.redirect('/api-docs/'));
-
-
 
 
 // server set up

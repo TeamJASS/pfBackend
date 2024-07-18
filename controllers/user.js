@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken";
 import { registerSchema, loginSchema } from "../schemas/schema.js";
 import { UserModel } from "../models/user.js"
 
@@ -73,17 +74,71 @@ export const login = async (req, res, next) => {
 }
 
 
+
+export const token = async (req, res, next) => {
+    try {
+
+        //validate request
+        const { value, error } = loginSchema.validate(req.body);
+        if (error) {
+            return res.status(400).send(error.details[0].message);
+        }
+        //find a user with their unique identifier
+
+        const user = await UserModel.findOne({
+            $or: [
+                { username: value.username },
+                { email: value.email },
+            ]
+
+        });
+        if (!user) {
+            return res.status(401).json("User not found");
+        }
+        //verify their password
+        const correctPassword = bcrypt.compareSync(value.password, user.password)
+        if (!correctPassword) {
+            return res.status(401).json("Invalid credentials");
+        }
+
+        //create a token
+        const token = jwt.sign({ id: user.id },
+            process.env.JWT_PRIVATE_KEY,
+            { expiresIn:"1h"}
+        )
+            
+
+
+        //return response
+        res.status(200).json({
+            message: "User logged in",
+            accessToken: token
+
+        });
+
+    } catch (error) {
+        next(error);
+    }
+
+}
+
+
+
+
+
+
+
 export const getUser = async (req, res, next) => {
     try {
         const username = req.params.username.toLowerCase();
         const options = { sort: { startDate: -1 } }
         const userDetails = await UserModel.findOne({ username })
-        .populate("userProfile")
+            .populate("userProfile")
             .populate({
                 path: "education",
                 options,
             })
-            
+
             .populate("skills")
 
             .populate({
@@ -91,7 +146,7 @@ export const getUser = async (req, res, next) => {
                 options: { sort: { date: -1 } },
             })
             .populate({
-                path: "experiences",
+                path: "experience",
                 options,
             })
             .populate({

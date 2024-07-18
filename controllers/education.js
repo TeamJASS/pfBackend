@@ -7,12 +7,14 @@ import { educationSchema } from "../schemas/schema.js";
   // Add Education
 
   export const addEducation = async ( req, res ) => {
+    try {
+      const { error, value } =educationSchema.validate({  
+        ...req.body,
+        image: req.file.filename});
+      if (error) {
+        return res.status(400).send(error.details[0].message);
+      }
 
-  try {
-    const { error, value } = educationSchema.validate(req.body);
-    if (error) {
-      return res.status(400).send(error.details[0].message);
-    }
 
     //then, find the user with the id that user passed when adding the education
     console.log('userId',req.session.user.id)
