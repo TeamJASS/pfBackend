@@ -6,17 +6,17 @@ import { getProjects, postproject, patchProject, deletedProject } from "../contr
 const projectRouter = Router();
 
 // get a project router
-projectRouter.get('/users/project', getProjects);
+projectRouter.get('/users/projects', getProjects);
 
 // Add Project
-projectRouter.post('/users/project', postproject);
+projectRouter.post('/users/projects', postproject);
 // ', localUpload.single('image')
 
 //update patch 
-projectRouter.patch('/users/project/:id', patchProject);
+projectRouter.patch('/users/projects/:id', patchProject);
 
 // Delete
-projectRouter.delete('/users/project/:id', deletedProject);
+projectRouter.delete('/users/projects/:id', deletedProject);
 
 // a method that will Get a single Project
 // projectRouter.get('/users/project/:id', getProjects);
