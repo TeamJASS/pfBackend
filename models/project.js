@@ -10,7 +10,9 @@ const projectSchema = new Schema({
   nameOfInstitution: { type: String },
   startDate: { type: String },
   startDate: { type: String },
-  user: { type: Types.ObjectId, ref: "User" },
+  user: { type: Types.ObjectId, ref: "User", select:false},
+},{
+timestamps:true
 });
 
 projectSchema.plugin(toJSON);

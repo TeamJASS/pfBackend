@@ -1,25 +1,25 @@
 import { Router } from "express";
-import {  getProject, postproject, patchProject, getProjects, deletedProject } from "../controllers/project.js";
+import { getProjects, postproject, patchProject, deletedProject } from "../controllers/project.js";
 
 
 // Create a Router
 const projectRouter = Router();
 
 // get a project router
-projectRouter.get('/projects', getProject);
+projectRouter.get('/users/project', getProjects);
 
 // Add Project
-projectRouter.post('/projects', postproject);
+projectRouter.post('/users/project', postproject);
 // ', localUpload.single('image')
 
 //update patch 
-projectRouter.patch('/projects/:id', patchProject);
+projectRouter.patch('/users/project/:id', patchProject);
 
 // Delete
-projectRouter.delete('/projects/:id', deletedProject);
+projectRouter.delete('/users/project/:id', deletedProject);
 
 // a method that will Get a single Project
-projectRouter.get('/projects/:id', getProjects);
+// projectRouter.get('/users/project/:id', getProjects);
 
 
 // Export router

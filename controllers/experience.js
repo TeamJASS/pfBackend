@@ -7,7 +7,7 @@ import { experienceSchema } from "../schemas/schema.js";
   export const allExperience = async (req, res, next) => {
     try {
       //we are fetching Experience that belongs to a particular user
-      const userSessionId = req.session.user.id
+      const userSessionId = req.session?.user?.id || req?.user.id;
       const alExperience = await Experience.find({ user: userSessionId });
       if (alExperience.length == 0) {
         return res.status(404).send("No Experience added");
@@ -19,23 +19,23 @@ import { experienceSchema } from "../schemas/schema.js";
   };
 
 
-// Get a single Experience record
-export const getExperience = async (req, res, next) => {
-    try {
-      // Get query Params
-      const { limit, skip, filter } = req.query;
-      // Get all Experience from database
-      const allExperience = await  Experience
-      .find({ name: filter })
-      .limit(limit)
-      .skip(skip);
-      // Return all Experience as response
-      res.json(allExperience);
-    } catch (error) {
-      next(error);
+// // Get a single Experience record
+// export const getExperience = async (req, res, next) => {
+//     try {
+//       // Get query Params
+//       const { limit, skip, filter } = req.query;
+//       // Get all Experience from database
+//       const allExperience = await  Experience
+//       .find({ name: filter })
+//       .limit(limit)
+//       .skip(skip);
+//       // Return all Experience as response
+//       res.json(allExperience);
+//     } catch (error) {
+//       next(error);
   
-    }
-  };
+//     }
+//   };
 
 
 
@@ -49,7 +49,7 @@ export const getExperience = async (req, res, next) => {
         return res.status(400).send(error.details[0].message);
       }
   
-      const userSessionId = req.session.user.id;
+      const userSessionId = req.session?.user?.id || req?.user.id;
      
   
       const user = await UserModel.findById(userSessionId);
@@ -59,7 +59,7 @@ export const getExperience = async (req, res, next) => {
   
       const experience = await Experience.create({ ...value, user: userSessionId });
   
-      user.experiences.push(experience._id)
+    user.experience.push(experience._id)
   
       await user.save();
   
@@ -77,13 +77,13 @@ export const getExperience = async (req, res, next) => {
 
 export const patchExperience = async (req, res, next) => {
 try {
-      const { error, value } = userProfileSchema.validate(req.body);
+      const { error, value } = experienceSchema.validate(req.body);
   
       if (error) {
         return res.status(400).send(error.details[0].message);
       }
   
-      const userSessionId = req.session.user.id; 
+      const userSessionId = req.session?.user?.id || req?.user.id;
       const user = await UserModel.findById(userSessionId);
       if (!user) {
         return res.status(404).send("User not found");
@@ -96,7 +96,7 @@ try {
   
       res.status(200).json({ experience });
     } catch (error) {
-      return res.status(500).json({error})
+      console.log(error.message);
     }
   };
 
@@ -108,7 +108,7 @@ try {
   
   export const deletedExperience = async (req, res, next) => {
     try {
-      const userSessionId = req.session.user.id; 
+      const userSessionId = req.session?.user?.id || req?.user.id;
       const user = await UserModel.findById(userSessionId);
       if (!user) {
         return res.status(404).send("User not found");
@@ -118,10 +118,10 @@ try {
             return res.status(404).send("experience not found");
         }
   
-        user.experiences.pull(req.params.id);
+        user.experience.pull(req.params.id);
         await user.save();
       res.status(200).json("Experience deleted");
     } catch (error) {
-      return res.status(500).json({error})
+      console.log(error.message);
     }
   };

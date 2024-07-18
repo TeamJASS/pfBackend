@@ -9,7 +9,7 @@ import { skillSchema } from "../schemas/schema.js";
 export const allSkills = async (req, res, next) => {
   try {
     //we are fetching Skill that belongs to a particular user
-    const userSessionId = req.session.user.id
+    const userSessionId = req.session?.user?.id || req?.user.id;
     const allSkill = await Skill.find({ user: userSessionId });
     if (allSkill.length == 0) {
       return res.status(404).send("No Skill added");
@@ -21,25 +21,7 @@ export const allSkills = async (req, res, next) => {
 };
 
 
-// Use filter to find skills
 
-export const getSkills = async (req, res, next) => {
-    try {
-      // Get query Params
-      const { limit, skip, filter } = req.query;
-      // Get all SkillS from database
-      const allSkillS = await  Skill
-      .find({ name: filter })
-      .limit(limit)
-      .skip(skip);
-      // Return all SkillS as response
-      res.json(allSkillS);
-    } catch (error) {
-      next(error);
-  
-    }
-  };
-  
   // Post Skills
 
   export const addSkills = async ( req, res ) => {
@@ -50,8 +32,7 @@ export const getSkills = async (req, res, next) => {
         return res.status(400).send(error.details[0].message);
       }
   
-      const userSessionId = req.session.user.id;
-     
+      const userSessionId =  req.session?.user?.id || req?.user.id; 
       const user = await UserModel.findById(userSessionId);
       if (!user) {
         return res.status(404).send("User not found");
@@ -81,7 +62,7 @@ export const patchSkills = async (req, res, next) => {
       return res.status(400).send(error.details[0].message);
     }
 
-    const userSessionId = req.session.user.id; 
+    const userSessionId = req.session?.user?.id || req?.user.id; 
     const user = await UserModel.findById(userSessionId);
     if (!user) {
       return res.status(404).send("User not found");
@@ -94,7 +75,7 @@ export const patchSkills = async (req, res, next) => {
 
     res.status(200).json({ skill });
   } catch (error) {
-    return res.status(500).json({error})
+    console.log(error.message);
   }
 };
 
@@ -105,7 +86,7 @@ export const patchSkills = async (req, res, next) => {
   
   export const deletedSkills = async (req, res, next) => {
     try {
-      const userSessionId = req.session.user.id; 
+      const userSessionId = req.session?.user?.id || req?.user.id; 
       const user = await UserModel.findById(userSessionId);
       if (!user) {
         return res.status(404).send("User not found");
@@ -120,7 +101,7 @@ export const patchSkills = async (req, res, next) => {
         await user.save();
       res.status(200).json("Skill deleted");
     } catch (error) {
-      return res.status(500).json({error})
+      console.log(error.message);
     }
   };
   

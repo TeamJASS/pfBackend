@@ -12,8 +12,11 @@ export const checkUserSession = (req, res, next) => {
       // //call next function
       next();
       // res.json(req.headers.authorization)
-    } catch (error) {}
-  } else {
+    } catch (error) {
+      return res.status(401).json({ error: "Token Expired" })
+    }
+  }
+  else {
     res.status(401).json("error");
   }
 };

@@ -51,29 +51,11 @@ try {
   }
   res.status(200).json({ Achievements: allAchievement });
 } catch (error) {
-  console.log(error)
+  console.log(error);
   // return res.status(500).json({error})
 }
 };
 
-
-export const getAchievements = async (req, res, next) => {
-    try {
-      // Get query Params
-      const { limit, skip, filter } = req.query;
-      // Get all Achievements from database
-      const allAchievements = await  Achievement
-      .find({ name: filter })
-      .limit(limit)
-      .skip(skip);
-      // Return all Achievements as response
-      res.json(allAchievements);
-    } catch (error) {
-      next(error);
-  
-    }
-  };
-  
  
 
 
@@ -86,9 +68,9 @@ export const patchAchievements = async (req, res, next) => {
 try {
   const { error, value } = achievementSchema.validate({  
     ...req.body,
-    award: req.files.award[0].filename,
-    image: req.files.image[0].filename,});
-
+    // award: req.files.award[0].filename,
+    // image: req.files.image[0].filename,});
+    image: req.file.filename});
 
   if (error) {
     return res.status(400).send(error.details[0].message);
@@ -107,7 +89,7 @@ try {
 
   res.status(200).json({ achievement });
 } catch (error) {
-  return res.status(500).json({error})
+  console.log(error);
 }
 };
 
@@ -122,7 +104,7 @@ try {
 
   try {
     const userSessionId = req.session.user.id; 
-    const user = await User.findById(userSessionId);
+    const user = await UserModel.findById(userSessionId);
     if (!user) {
       return res.status(404).send("User not found");
     }
@@ -137,6 +119,6 @@ try {
 
     res.status(200).json("Achievement deleted");
   } catch (error) {
-    return res.status(500).json({error})
+    console.log(error);
   }
 };

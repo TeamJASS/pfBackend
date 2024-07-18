@@ -3,11 +3,13 @@ import { toJSON } from "@reis/mongoose-to-json";
 
 const skillSchema = new Schema({
   name: { type: String },
-  levelOfProficency: {
+  levelOfProficiency: {
     type: String,
-    enum: ["Beginner", "Intermediate", "Advance", "Expert"],
-    user: { type: Types.ObjectId, ref: "User" },
+    enum: ["Beginner", "Intermediate", "Advanced", "Expert"]
   },
+  user: { type: Types.ObjectId, ref: "User", select: false },
+}, {
+  timestamps: true
 });
 
 skillSchema.plugin(toJSON);
