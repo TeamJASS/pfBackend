@@ -41,7 +41,7 @@ import { educationSchema } from "../schemas/schema.js";
 
 
  // Get all Education
-  export const allC = async (req, res, next) => {
+  export const getEducationList  = async (req, res, next) => {
 
 try {
   //we are fetching education that belongs to a particular user

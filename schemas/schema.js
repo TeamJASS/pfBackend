@@ -36,7 +36,7 @@ export const userProfileSchema = joi.object({
 
 export const skillSchema = joi.object({
     name: joi.string().required(),
-    levelOfProficiency: joi.string().valid("Beginner", "Intermediate", "Advance", "Expert"),
+    levelOfProficiency: joi.string().valid("Beginner", "Intermediate", "Advanced", "Expert"),
     user: joi.string()
 });
 
